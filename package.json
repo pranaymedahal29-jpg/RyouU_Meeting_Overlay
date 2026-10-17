@@ -1,0 +1,14 @@
+
+{
+  "name": "ryouu",
+  "version": "1.0.0",
+  "description": "Real-time interview identity monitoring overlay",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "*"
+  }
+}

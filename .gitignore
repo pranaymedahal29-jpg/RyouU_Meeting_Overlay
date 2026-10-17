@@ -1,0 +1,21 @@
+
+node_modules/
+.env
+.env.*
+!.env.example
+dist/
+out/
+logs/
+*.log
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Local reference audio cache (produced by Supabase gateway)
+storage/reference_cache/
+
+# Debug audio samples (synthetic test files, not real KYC data)
+# Remove this line to track debug samples in git
+debug_audio/

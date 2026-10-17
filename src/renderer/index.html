@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';"
+  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>RyouU Overlay</title>
+</head>
+<body>
+  <div class="overlay-card">
+    <!-- Header with window dragging and close -->
+    <header class="card-header">
+      <div class="brand">
+        <span class="brand-name">RyouU</span>
+        <div class="status-badge">
+          <span id="statusDot" class="dot"></span>
+          <span id="statusText">Ready</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div id="flagBadge" class="flag-counter-badge" title="Total Integrity Flags">
+          <span class="flag-icon">🚩</span>
+          <span id="flagCount">0</span>
+        </div>
+        <button id="closeButton" class="icon-btn" aria-label="Close">&times;</button>
+      </div>
+    </header>
+
+    <!-- Multi-Modal Status Badges -->
+    <section class="modalities-bar">
+      <span id="videoBadge" class="modality-pill status-ok" title="CLIP ViT-L/14 Video Verification">📹 Video: OK</span>
+      <span id="audioBadge" class="modality-pill status-ok" title="Detectif.ai Aletheia Audio Deepfake">🎙️ Voice: Natural</span>
+      <span id="speakerBadge" class="modality-pill status-ok" title="Detectif.ai Eidos Speaker Verification">👤 Speaker: Match</span>
+    </section>
+
+    <!-- Deepfake / Anomaly Flag Alert Banner -->
+    <section id="flagAlertBanner" class="flag-alert-banner hidden">
+      <div class="flag-alert-content">
+        <div class="flag-alert-header">
+          <span class="flag-alert-icon">⚠️</span>
+          <strong id="flagAlertTitle">ANOMALY / DEEPFAKE DETECTED</strong>
+        </div>
+        <div id="flagAlertDetails" class="flag-alert-details">
+          Suspicious artifacts or speaker mismatch detected.
+        </div>
+      </div>
+      <button id="dismissFlagBtn" class="dismiss-flag-btn" title="Acknowledge flag">Dismiss</button>
+    </section>
+
+    <!-- Verified Authentic Pill (shows when all checks pass) -->
+    <section id="verifiedPill" class="verified-pill hidden">
+      <span class="verified-icon">✓</span>
+      <span id="verifiedText">Integrity Verified: CLIP ViT-L/14 & Detectif.ai</span>
+    </section>
+
+    <!-- Candidate & Supabase Gateway Row -->
+    <div class="gateway-row">
+      <div class="gateway-field">
+        <label for="candidateIdInput" class="field-label">Candidate:</label>
+        <input type="text" id="candidateIdInput" class="text-input" value="candidate-001" placeholder="ID (e.g. cand-001)">
+      </div>
+      <div class="gateway-status">
+        <span id="gatewayStatusBadge" class="gateway-pill" title="Supabase Reference Audio Gateway">⚡ Gateway: Local Debug</span>
+      </div>
+    </div>
+
+    <!-- Controls Row -->
+    <div class="controls-row">
+      <button id="selectButton" class="action-btn secondary">Select Region</button>
+      <button id="autoMonitorButton" class="action-btn primary">Start Auto-Monitor</button>
+      <button id="recordOnceButton" class="action-btn neutral">Record 25s</button>
+      <button id="testAudioBtn" class="action-btn neutral" title="Record 25s system audio clip and verify against reference Test_Audio.m4a">Test Voice</button>
+    </div>
+
+    <!-- Interval & Debug Options Bar -->
+    <div class="settings-bar">
+      <div class="setting-group">
+        <label for="intervalSelect" class="settings-label">Interval:</label>
+        <select id="intervalSelect" class="interval-select">
+          <option value="60" selected>1 Min (60s)</option>
+          <option value="random">2–5 Min (Random)</option>
+          <option value="10">10s (Test)</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <label for="simulateSelect" class="settings-label">Simulate:</label>
+        <select id="simulateSelect" class="interval-select">
+          <option value="none" selected>None</option>
+          <option value="voice_deepfake">Voice Clone</option>
+          <option value="speaker_mismatch">Speaker Mismatch</option>
+        </select>
+      </div>
+
+      <span id="countdownDisplay" class="countdown-display">Idle</span>
+    </div>
+
+    <!-- Region and Output Diagnostic Details -->
+    <div class="diagnostic-box">
+      <div id="regionStatus" class="region-status">
+        <span class="info-label">Candidate Tile:</span>
+        <span id="regionValue" class="info-val">Not selected</span>
+      </div>
+      <div id="outputText" class="output-text">
+        Select candidate tile to begin 1-minute auto-recording with CLIP ViT-L/14 & Detectif.ai audio verification.
+      </div>
+    </div>
+
+    <!-- Explicit Consent Modal -->
+    <div id="consentModal" class="consent-modal hidden">
+      <div class="consent-box">
+        <h3>Consent & Monitoring Confirmation</h3>
+        <p>
+          Auto-monitoring captures 25-second video & audio clips at 1-minute intervals. Integrity verification runs locally:
+        </p>
+        <ul class="consent-list">
+          <li>📹 <strong>CLIP ViT-L/14</strong>: Video Deepfake Verification</li>
+          <li>🎙️ <strong>Detectif.ai Aletheia</strong>: Voice Deepfake Detection</li>
+          <li>👤 <strong>Detectif.ai Eidos</strong>: Speaker Verification against Supabase reference audio</li>
+        </ul>
+        <p class="consent-sub">
+          Ensure explicit candidate consent has been obtained before proceeding.
+        </p>
+        <div class="consent-actions">
+          <button id="consentCancelBtn" class="action-btn secondary">Cancel</button>
+          <button id="consentConfirmBtn" class="action-btn primary">Confirm & Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
